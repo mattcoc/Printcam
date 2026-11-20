@@ -1,0 +1,25 @@
+name: PrintCam
+options:
+  deploymentTarget:
+    iOS: "16.0"
+packages:
+  Swifter:
+    url: https://github.com/httpswift/swifter.git
+    exactVersion: 1.5.0
+targets:
+  PrintCam:
+    type: application
+    platform: iOS
+    sources: [PrintCam.swift, Camera.swift, viewer.html]
+    dependencies:
+      - package: Swifter
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: it.rubbs3d.PrintCam
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_NSCameraUsageDescription: La fotocamera mostra la stampante al tuo secondo iPhone.
+        INFOPLIST_KEY_NSLocalNetworkUsageDescription: Condivide la diretta con il tuo dispositivo di controllo.
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone: UIInterfaceOrientationPortrait
+        TARGETED_DEVICE_FAMILY: "1"
+        SWIFT_VERSION: "5.0"
