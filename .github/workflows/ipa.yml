@@ -1,0 +1,20 @@
+name: Crea IPA
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - run: brew install xcodegen
+      - run: xcodegen generate
+      - run: xcodebuild -project PrintCam.xcodeproj -scheme PrintCam -configuration Release -sdk iphoneos -destination generic/platform=iOS -derivedDataPath build CODE_SIGNING_ALLOWED=NO build
+      - run: mkdir Payload && cp -R build/Build/Products/Release-iphoneos/PrintCam.app Payload/ && zip -qr PrintCam.ipa Payload
+      - uses: actions/upload-artifact@v4
+        with:
+          name: PrintCam-per-sideload
+          path: PrintCam.ipa
